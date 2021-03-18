@@ -15,6 +15,8 @@ namespace PhoenixCust.CodeFirstEntities
         }
 
         public DbSet <CodeFirstCustomer> CodeFirstCustomers { get; set; }
+
+        public DbSet <Project> Projects { get; set; }
     }
 
 
