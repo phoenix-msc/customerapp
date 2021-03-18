@@ -1,0 +1,5 @@
+Use the following command to create db context from existing db tables:
+
+Scaffold-DbContext "Server=localhost;Database=dbfirst;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities
+
+scott la salle network
