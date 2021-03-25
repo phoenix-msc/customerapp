@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +28,14 @@ namespace PhoenixCust
         {
                 services.AddDbContext<CodeFirstContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("CodeFirstConnection")));
                 services.AddControllersWithViews();
+                services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) 
+                .AddCookie(options=>
+                {
+                    options.Cookie.Name = "AuthCookie";
+                    options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                    options.LoginPath = "/Account/Login";
+
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +55,8 @@ namespace PhoenixCust
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
