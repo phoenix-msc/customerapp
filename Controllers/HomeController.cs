@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using PhoenixCust.CodeFirstEntities;
 using PhoenixCust.Models;
 using System;
 using System.Collections.Generic;
@@ -12,15 +14,20 @@ namespace PhoenixCust.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly CodeFirstContext _dbContext;
+        //enable linq query
+        
+        public HomeController(ILogger<HomeController> logger, CodeFirstContext dbContext)
         {
             _logger = logger;
+            _dbContext = dbContext;
         }
 
         public IActionResult Index()
         {
-            return View();
+            //linq filtering
+            var projects = _dbContext.Projects.Where(p=>p.Status=="pending").ToList();
+            return View(projects);
         }
 
         public IActionResult Privacy()
